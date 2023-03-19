@@ -15,7 +15,7 @@ const Elevator = (props: any) => {
     console.log(props.elevator);
     if (props.elevator.isBusy) {
       let top = Number(elevator.current.style.marginBottom.replace("px", ""));
-      console.log(top);
+
       let interval = setInterval(() => {
         if (elevator.current) {
           if (top < props.elevator.floor * 160) {
@@ -29,13 +29,34 @@ const Elevator = (props: any) => {
           elevator.current.style.marginBottom ==
           String(props.elevator.floor * 160) + "px"
         ) {
-          // let array = props.allElevators;
-          // props.setAllElevators([...array]);
           clearInterval(interval);
+          let array = props.elevators;
+          for (let i = 0; i < array.length; i++) {
+            if (array[i] == props.elevator) {
+              array[i] = {
+                floor: props.elevator.floor,
+                isBusy: true,
+                color: "green",
+                chosenFloor: props.elevator.floor,
+              };
+              // props.setAllElevators([...array]);
+              setTimeout(() => {
+                if (array[i].color == "green") {
+                  array[i] = {
+                    floor: props.elevator.floor,
+                    isBusy: false,
+                    color: "black",
+                    chosenFloor: props.elevator.floor,
+                  };
+                  props.setAllElevators([...array]);
+                }
+              }, 2000);
+            }
+          }
         }
       }, 100);
     }
-  }, [props.allElevators, props.elevator]);
+  }, [props, props.elevator]);
 
   return (
     <div ref={elevator} className="elevator">

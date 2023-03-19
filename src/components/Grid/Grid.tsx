@@ -68,24 +68,35 @@ const Grid = () => {
       }
     }
     console.log(elevator);
-    for (let i = 0; i < allElevators.length; i++) {
-      if (elevator == allElevators[i]) {
-        allElevators[i] = {
+    let array = allElevators;
+    for (let i = 0; i < array.length; i++) {
+      if (elevator == array[i]) {
+        console.log("ll");
+        array[i] = {
           floor: floor,
           isBusy: true,
-          color: " red",
+          color: "red",
           chosenFloor: floor,
         };
-        setTimeout(() => {
-          console.log(i);
-          allElevators[i] = {
-            floor: floor,
-            isBusy: false,
-            color: "black",
-            chosenFloor: floor,
-          };
-          setAllElevators(allElevators);
-        }, 2000);
+        elevators[i] = {
+          floor: floor,
+          isBusy: true,
+          color: "red",
+          chosenFloor: floor,
+        };
+        // let array = allElevators;
+        console.log(array);
+        setAllElevators(array);
+        // setTimeout(() => {
+        //   console.log(i);
+        //   allElevators[i] = {
+        //     floor: floor,
+        //     isBusy: false,
+        //     color: "black",
+        //     chosenFloor: floor,
+        //   };
+        //   setAllElevators(allElevators);
+        // }, 2000);
       }
     }
   };
@@ -113,6 +124,7 @@ const Grid = () => {
               elevator={elevators[j - 1]}
               setAllElevators={setAllElevators}
               allElevators={allElevators}
+              elevators={elevators}
               // floor={9 - i}
               // color={"black"}
               // isBusy={false}
