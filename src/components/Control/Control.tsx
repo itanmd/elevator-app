@@ -1,6 +1,15 @@
 import { IElevator } from "../Elevator/Elevator";
 import { ICall } from "../Buttons/Button";
 
+const moveElevator2 = (elevator: IElevator, newFloor: number) => {
+  elevator = {
+    floor: newFloor,
+    isBusy: true,
+    color: "red",
+    chosenFloor: newFloor,
+  };
+};
+
 // eitan environment
 export const runFunction = () => {
   setInterval(() => {
@@ -13,8 +22,8 @@ function getRandomFloor() {
 }
 
 const floorsFreeElevators: IElevator[][] = [
-  [{ floor: 0 }, { floor: 0 }, { floor: 0 }, { floor: 0 }],
-  [{ floor: 1 }],
+  [{ floor: 0 }, { floor: 0 }, { floor: 0 }, { floor: 0 }, { floor: 0 }],
+  [],
   [],
   [],
   [],
@@ -40,7 +49,7 @@ function activateCallQueue() {
 
   const elv = getFreeElevator(call.floor);
 
-  // console.log({elv});
+  console.log({ elv });
 
   if (!elv) {
     isActivateCallFunWorking = false;
@@ -64,7 +73,7 @@ export function orderElevator(floor: number) {
     floor,
     orderTime: Date.now(),
   };
-  callsQueue.push(call);
+  // callsQueue.push(call);
   // console.log({callsQueue});
 
   if (!isActivateCallFunWorking) {

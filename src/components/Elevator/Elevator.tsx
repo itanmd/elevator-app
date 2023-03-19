@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Elevator.css";
 
 export interface IElevator {
   floor: number;
   isBusy?: boolean;
   color?: string;
+  chosenFloor?: number;
 }
 
-const Elevator = (props: IElevator) => {
+const Elevator = (props: any) => {
+  useEffect(() => {
+    console.log(props.elevator);
+  }, [props.elevator]);
+
   return (
-    <div className="elevator" style={{ color: props.color, top: props.floor }}>
+    <div
+      className="elevator"
+      style={{ color: props.elevator.color, top: props.elevator.floor }}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 50 50"

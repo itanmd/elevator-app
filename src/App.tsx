@@ -11,18 +11,13 @@ function App() {
     <>
       <div className="container-fluid">
         <Floors />
-        <Grid>
-          <Elevator floor={} />
-          <Elevator top={eleLocation2} />
-          <Elevator top={eleLocation3} />
-          <Elevator top={eleLocation4} />
-          <Elevator top={eleLocation5} />
-        </Grid>
-        <Button floor={0} />
+        <Grid />
+
+        {/* <Button floor={0} />
         <Button floor={1} />
         <Button floor={2} />
         <Button floor={3} />
-        <Button floor={4} />
+        <Button floor={4} /> */}
       </div>
     </>
   );

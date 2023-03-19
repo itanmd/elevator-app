@@ -4,12 +4,12 @@ import { orderElevator } from "../Control/Control";
 
 export interface ICall {
   floor: number;
-  orderTime: number;
+  // orderTime: number;
 }
 
 const Button = (props: ICall) => {
   const handleClick = () => {
-    orderElevator(props.floor);
+    // orderElevator(props.floor);
   };
   return (
     <div className="row">
