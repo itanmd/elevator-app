@@ -50,40 +50,57 @@ interface Props {
 
 const Grid = () => {
   const [chosenFloor, setChosenFloor] = useState(0);
+  const [allElevators, setAllElevators] = useState(elevators);
   const [freeElevator, setFreeElevator] = useState<IElevator | null>(null);
 
   const handleClick = (floor: any) => {
     console.log(floor);
     let elevator = null;
     setChosenFloor(floor);
-    let distance = Math.abs(elevators[0].floor - floor);
-    for (let i = 0; i < elevators.length; i++) {
-      if (elevators[i].isBusy == false) {
-        if (Math.abs(elevators[i].floor - floor) <= distance) {
-          distance = Math.abs(elevators[i].floor - floor);
-          setFreeElevator(elevators[i]);
-          elevator = elevators[i];
+    let distance = Math.abs(allElevators[0].floor - floor);
+    for (let i = 0; i < allElevators.length; i++) {
+      if (allElevators[i].isBusy == false) {
+        if (Math.abs(allElevators[i].floor - floor) <= distance) {
+          distance = Math.abs(allElevators[i].floor - floor);
+          // setFreeElevator(allElevators[i]);
+          elevator = allElevators[i];
         }
       }
     }
-    console.log(freeElevator);
-    for (let i = 0; i < elevators.length; i++) {
-      if (elevator == elevators[i]) {
-        console.log("kk");
-        elevators[i] = {
+    console.log(elevator);
+    for (let i = 0; i < allElevators.length; i++) {
+      if (elevator == allElevators[i]) {
+        allElevators[i] = {
           floor: floor,
           isBusy: true,
           color: " red",
           chosenFloor: floor,
         };
+        setTimeout(() => {
+          console.log(i);
+          allElevators[i] = {
+            floor: floor,
+            isBusy: false,
+            color: "black",
+            chosenFloor: floor,
+          };
+          setAllElevators(allElevators);
+        }, 2000);
       }
     }
-    console.log(elevators);
   };
+  // setAllElevators(elevators);
+  console.log(allElevators);
 
-  useEffect(() => {}, [freeElevator]);
+  // useEffect(() => {
+  //   console.log(allElevators);
+  // }, [allElevators]);
 
   const rows = [];
+
+  let elevatorsUi = elevators.map((item, index) => {
+    return <Elevator elevator={elevators[index]} />;
+  });
 
   for (let i = 0; i < 10; i++) {
     const cols = [];
@@ -94,7 +111,8 @@ const Grid = () => {
           <div key={`${i}-${j}`} className="col">
             <Elevator
               elevator={elevators[j - 1]}
-
+              setAllElevators={setAllElevators}
+              allElevators={allElevators}
               // floor={9 - i}
               // color={"black"}
               // isBusy={false}
