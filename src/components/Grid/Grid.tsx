@@ -48,7 +48,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const Grid = () => {
+const Grid = (props: any) => {
   const [chosenFloor, setChosenFloor] = useState(0);
   const [floor, setFloor] = useState(0);
   const [allElevators, setAllElevators] = useState(elevators);
@@ -128,11 +128,11 @@ const Grid = () => {
     return <Elevator elevator={elevators[index]} />;
   });
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i <= props.numberOfFloor; i++) {
     const cols = [];
 
     for (let j = 0; j < 7; j++) {
-      if (i == 9 && j !== 0 && j !== 6) {
+      if (i == props.numberOfFloor && j !== 0 && j !== 6) {
         cols.push(
           <div key={`${i}-${j}`} className="col">
             <Elevator
@@ -145,7 +145,7 @@ const Grid = () => {
             {/* Empty div */}
           </div>
         );
-      } else if (j == 0 && i == 9) {
+      } else if (j == 0 && i == props.numberOfFloor) {
         cols.push(
           <div key={`${i}-${j}`} className="col floor">
             <h4>Ground Floor</h4>
@@ -154,25 +154,25 @@ const Grid = () => {
       } else if (j == 0 && i == 8) {
         cols.push(
           <div key={`${i}-${j}`} className="col floor">
-            <h4>{9 - i}st</h4>
+            <h4>{props.numberOfFloor - i}st</h4>
           </div>
         );
       } else if (j == 0 && i == 7) {
         cols.push(
           <div key={`${i}-${j}`} className="col floor">
-            <h4>{9 - i}nd</h4>
+            <h4>{props.numberOfFloor - i}nd</h4>
           </div>
         );
       } else if (j == 0 && i == 6) {
         cols.push(
           <div key={`${i}-${j}`} className="col floor">
-            <h4>{9 - i}rd</h4>
+            <h4>{props.numberOfFloor - i}rd</h4>
           </div>
         );
       } else if (j == 0) {
         cols.push(
           <div key={`${i}-${j}`} className="col floor">
-            <h4>{9 - i}th</h4>
+            <h4>{props.numberOfFloor - i}th</h4>
           </div>
         );
       } else if (j == 6) {
@@ -180,12 +180,12 @@ const Grid = () => {
           <div
             key={`${i}-${j}`}
             className="col floor"
-            onClick={(e) => handleClick(e, 9 - i)}
+            onClick={(e) => handleClick(e, props.numberOfFloor - i)}
           >
             <Button
               className="button"
-              id={9 - i}
-              floor={9 - i}
+              id={props.numberOfFloor - i}
+              floor={props.numberOfFloor - i}
               allElevators={allElevators}
               elevators={elevators}
             />
@@ -208,10 +208,12 @@ const Grid = () => {
   }
 
   return (
+    // <div>
     <div className="container">
       {rows}
       {/* {props.children} */}
     </div>
+    // </div>
   );
 };
 
