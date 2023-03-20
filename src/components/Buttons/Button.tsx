@@ -7,15 +7,20 @@ export interface ICall {
   // orderTime: number;
 }
 
-const Button = (props: ICall) => {
+const Button = (props: any) => {
   const handleClick = () => {
     // orderElevator(props.floor);
   };
   return (
     <div className="row">
       <div className="col">
-        <button className="btn btn-success" onClick={handleClick}>
-          call
+        <button
+          // className="btn btn-success"
+          className="btn1 button-3"
+          onClick={handleClick}
+          id={props.floor}
+        >
+          Call
         </button>
       </div>
     </div>

@@ -12,7 +12,6 @@ const Elevator = (props: any) => {
   const elevator = useRef<any>(); // Change type
 
   useEffect(() => {
-    console.log(props.elevator);
     if (props.elevator.isBusy) {
       let top = Number(elevator.current.style.marginBottom.replace("px", ""));
 
@@ -40,6 +39,7 @@ const Elevator = (props: any) => {
                 chosenFloor: props.elevator.floor,
               };
               // props.setAllElevators([...array]);
+              props.setFloor(props.elevator.floor);
               setTimeout(() => {
                 if (array[i].color == "green") {
                   array[i] = {

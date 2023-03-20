@@ -50,11 +50,40 @@ interface Props {
 
 const Grid = () => {
   const [chosenFloor, setChosenFloor] = useState(0);
+  const [floor, setFloor] = useState(0);
   const [allElevators, setAllElevators] = useState(elevators);
   const [freeElevator, setFreeElevator] = useState<IElevator | null>(null);
 
-  const handleClick = (floor: any) => {
+  useEffect(() => {
     console.log(floor);
+    let buttons = document.getElementsByClassName("btn1") as any;
+    for (let button of buttons) {
+      if (button.id == floor) {
+        button.className = "btn1 button";
+        button.style.background = "#f4f5f4";
+        button.innerText = "Arrived";
+        setTimeout(() => {
+          button.className = "btn1 button-3";
+          button.style.background = "#298e46";
+          button.innerText = "Call";
+        }, 2000);
+      }
+    }
+  }, [floor]);
+
+  useEffect(() => {
+    let buttons = document.getElementsByClassName("btn1") as any;
+    for (let button of buttons) {
+      button.className = "btn1 button-3";
+      button.style.background = "#298e46";
+      button.innerText = "Call";
+    }
+  }, []);
+
+  const handleClick = (e: any, floor: number) => {
+    // if (e.target.className == "btn1") e.target.style.background = "red";
+    e.target.style.background = "red";
+    e.target.innerText = "Waiting";
     let elevator = null;
     setChosenFloor(floor);
     let distance = Math.abs(allElevators[0].floor - floor);
@@ -62,16 +91,13 @@ const Grid = () => {
       if (allElevators[i].isBusy == false) {
         if (Math.abs(allElevators[i].floor - floor) <= distance) {
           distance = Math.abs(allElevators[i].floor - floor);
-          // setFreeElevator(allElevators[i]);
           elevator = allElevators[i];
         }
       }
     }
-    console.log(elevator);
     let array = allElevators;
     for (let i = 0; i < array.length; i++) {
       if (elevator == array[i]) {
-        console.log("ll");
         array[i] = {
           floor: floor,
           isBusy: true,
@@ -84,19 +110,8 @@ const Grid = () => {
           color: "red",
           chosenFloor: floor,
         };
-        // let array = allElevators;
-        console.log(array);
+
         setAllElevators(array);
-        // setTimeout(() => {
-        //   console.log(i);
-        //   allElevators[i] = {
-        //     floor: floor,
-        //     isBusy: false,
-        //     color: "black",
-        //     chosenFloor: floor,
-        //   };
-        //   setAllElevators(allElevators);
-        // }, 2000);
       }
     }
   };
@@ -125,10 +140,7 @@ const Grid = () => {
               setAllElevators={setAllElevators}
               allElevators={allElevators}
               elevators={elevators}
-              // floor={9 - i}
-              // color={"black"}
-              // isBusy={false}
-              // chosenFloor={chosenFloor}
+              setFloor={setFloor}
             />
             {/* Empty div */}
           </div>
@@ -168,9 +180,15 @@ const Grid = () => {
           <div
             key={`${i}-${j}`}
             className="col floor"
-            onClick={() => handleClick(9 - i)}
+            onClick={(e) => handleClick(e, 9 - i)}
           >
-            <Button floor={9 - i} />
+            <Button
+              className="button"
+              id={9 - i}
+              floor={9 - i}
+              allElevators={allElevators}
+              elevators={elevators}
+            />
           </div>
         );
       } else {
