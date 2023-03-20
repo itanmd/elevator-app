@@ -40,6 +40,8 @@ const Elevator = (props: any) => {
               };
               // props.setAllElevators([...array]);
               props.setFloor(props.elevator.floor);
+              let audio = new Audio("ding-36029.mp3");
+              audio.play();
               setTimeout(() => {
                 if (array[i].color == "green") {
                   array[i] = {
