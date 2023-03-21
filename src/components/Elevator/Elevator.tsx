@@ -1,20 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import "./Elevator.css";
 
-export interface IElevator {
-  floor: number;
-  isBusy?: boolean;
-  color?: string;
-  chosenFloor?: number;
-}
-
 const Elevator = (props: any) => {
-  const elevator = useRef<any>(); // Change type
-
+  const elevator = useRef<any | HTMLDivElement | undefined | null>(null);
   useEffect(() => {
     if (props.elevator.isBusy) {
-      let top = Number(elevator.current.style.marginBottom.replace("px", ""));
-
+      let top = Number(elevator?.current!.style.marginBottom.replace("px", ""));
       let interval = setInterval(() => {
         if (elevator.current) {
           if (top < props.elevator.floor * 160) {
@@ -25,25 +16,24 @@ const Elevator = (props: any) => {
           elevator.current.style.marginBottom = Number(top) + "px";
         }
         if (
-          elevator.current.style.marginBottom ==
+          elevator.current!.style.marginBottom ===
           String(props.elevator.floor * 160) + "px"
         ) {
           clearInterval(interval);
           let array = props.allElevators;
           for (let i = 0; i < array.length; i++) {
-            if (array[i] == props.elevator) {
+            if (array[i] === props.elevator) {
               array[i] = {
                 floor: props.elevator.floor,
                 isBusy: true,
                 color: "green",
                 chosenFloor: props.elevator.floor,
               };
-              // props.setAllElevators([...array]);
               props.setFloor(props.elevator.floor);
               let audio = new Audio("ding-36029.mp3");
               audio.play();
               setTimeout(() => {
-                if (array[i].color == "green") {
+                if (array[i].color === "green") {
                   array[i] = {
                     floor: props.elevator.floor,
                     isBusy: false,

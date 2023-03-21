@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./App.css";
 import Grid from "./components/Grid/Grid";
-import Button from "./components/Buttons/Button";
-import Elevator from "./components/Elevator/Elevator";
 
 export interface IElevator {
   floor: number;
@@ -49,21 +47,6 @@ function App() {
   const [numberOfFloor, setNumberOfFloor] = useState<number>(9);
   const [numberOfElevator, setNumberOfElevator] = useState<number>(5);
   const [allElevators, setAllElevators] = useState<IElevator[]>(elevators);
-
-  useEffect(() => {
-    let array: IElevator[] = [];
-    setAllElevators([...array]);
-    for (let i = 0; i < numberOfElevator; i++) {
-      let elevator = {
-        floor: 0,
-        isBusy: false,
-        color: "black",
-        chosenFloor: 0,
-      };
-      array.push(elevator);
-    }
-    setAllElevators([...array]);
-  }, []);
 
   const changeNumberOfElevator = (e: any) => {
     let number = e.target.value;
