@@ -3,9 +3,15 @@ import Elevator from "../Elevator/Elevator";
 import Button from "../Buttons/Button";
 import "./Grid.css";
 
+export interface ITime {
+  time: number;
+  floor?: number;
+}
+
 const Grid = (props: any) => {
   const [chosenFloor, setChosenFloor] = useState(0);
   const [floor, setFloor] = useState(0);
+  const [times, setTimes] = useState<ITime>();
 
   useEffect(() => {
     let buttons = document.getElementsByClassName("btn1") as any;
@@ -62,6 +68,19 @@ const Grid = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    if (times) {
+      let time = Math.ceil(times.time / 1000);
+      console.log(time, " seconds");
+      document.getElementById("time")!.style.display = "block";
+      document.getElementById("time")!.innerText =
+        "It took the elevator " +
+        String(time) +
+        " seconds to reach floor " +
+        String(times!.floor);
+    }
+  }, [times]);
+
   const rows = [];
 
   for (let i = 0; i <= props.numberOfFloor; i++) {
@@ -80,6 +99,8 @@ const Grid = (props: any) => {
               setAllElevators={props.setAllElevators}
               allElevators={props.allElevators}
               setFloor={setFloor}
+              setTimes={setTimes}
+              times={times}
             />
           </div>
         );
@@ -140,7 +161,17 @@ const Grid = (props: any) => {
     );
   }
 
-  return <div className="container">{rows}</div>;
+  return (
+    <div className="container">
+      <h4
+        id="time"
+        style={{ display: "none", background: "rgb(199, 199, 199)" }}
+      >
+        time:
+      </h4>
+      {rows}
+    </div>
+  );
 };
 
 export default Grid;

@@ -1,6 +1,16 @@
 .container {
   background-color: white;
   height: fit-content;
+  padding: 0 !important;
+  max-width: 1500px;
+}
+
+#time {
+  display: none;
+  background-color: rgb(199, 199, 199);
+  margin: 0;
+  text-align: center;
+  padding-bottom: 30px;
 }
 
 .col {

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./Elevator.css";
 
 const Elevator = (props: any) => {
@@ -6,6 +6,7 @@ const Elevator = (props: any) => {
   useEffect(() => {
     if (props.elevator.isBusy) {
       let top = Number(elevator?.current!.style.marginBottom.replace("px", ""));
+      let date1 = new Date().getTime();
       let interval = setInterval(() => {
         if (elevator.current) {
           if (top < props.elevator.floor * 160) {
@@ -32,6 +33,9 @@ const Elevator = (props: any) => {
               props.setFloor(props.elevator.floor);
               let audio = new Audio("ding-36029.mp3");
               audio.play();
+              let date2 = new Date().getTime();
+              console.log(date2, date1);
+
               setTimeout(() => {
                 if (array[i].color === "green") {
                   array[i] = {
@@ -41,6 +45,10 @@ const Elevator = (props: any) => {
                     chosenFloor: props.elevator.floor,
                   };
                   props.setAllElevators([...array]);
+                  props.setTimes({
+                    time: date2 - date1,
+                    floor: props.elevator.floor,
+                  });
                 }
               }, 2000);
             }

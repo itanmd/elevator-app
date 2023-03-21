@@ -90,12 +90,6 @@ function App() {
           allElevators={allElevators}
           setAllElevators={setAllElevators}
         />
-
-        {/* <Button floor={0} />
-        <Button floor={1} />
-        <Button floor={2} />
-        <Button floor={3} />
-        <Button floor={4} /> */}
       </div>
     </>
   );
