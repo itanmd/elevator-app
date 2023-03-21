@@ -77,7 +77,7 @@ function App() {
           ></input>
         </div>
         <div id="divInput">
-          <h3>Enter number of floors</h3>
+          <h3>Enter number of elevators</h3>
           <input
             value={numberOfElevator}
             type="number"
