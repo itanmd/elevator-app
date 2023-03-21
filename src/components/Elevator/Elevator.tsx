@@ -29,7 +29,7 @@ const Elevator = (props: any) => {
           String(props.elevator.floor * 160) + "px"
         ) {
           clearInterval(interval);
-          let array = props.elevators;
+          let array = props.allElevators;
           for (let i = 0; i < array.length; i++) {
             if (array[i] == props.elevator) {
               array[i] = {

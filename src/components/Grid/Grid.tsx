@@ -11,38 +11,38 @@ export interface IElevator {
   chosenFloor?: number;
 }
 
-let elevators: IElevator[] = [
-  {
-    floor: 0,
-    isBusy: false,
-    color: "black",
-    chosenFloor: 0,
-  },
-  {
-    floor: 0,
-    isBusy: false,
-    color: "black",
-    chosenFloor: 0,
-  },
-  {
-    floor: 0,
-    isBusy: false,
-    color: "black",
-    chosenFloor: 0,
-  },
-  {
-    floor: 0,
-    isBusy: false,
-    color: "black",
-    chosenFloor: 0,
-  },
-  {
-    floor: 0,
-    isBusy: false,
-    color: "black",
-    chosenFloor: 0,
-  },
-];
+// let elevators: IElevator[] = [
+//   {
+//     floor: 0,
+//     isBusy: false,
+//     color: "black",
+//     chosenFloor: 0,
+//   },
+//   {
+//     floor: 0,
+//     isBusy: false,
+//     color: "black",
+//     chosenFloor: 0,
+//   },
+//   {
+//     floor: 0,
+//     isBusy: false,
+//     color: "black",
+//     chosenFloor: 0,
+//   },
+//   {
+//     floor: 0,
+//     isBusy: false,
+//     color: "black",
+//     chosenFloor: 0,
+//   },
+//   {
+//     floor: 0,
+//     isBusy: false,
+//     color: "black",
+//     chosenFloor: 0,
+//   },
+// ];
 
 interface Props {
   children?: React.ReactNode;
@@ -51,11 +51,10 @@ interface Props {
 const Grid = (props: any) => {
   const [chosenFloor, setChosenFloor] = useState(0);
   const [floor, setFloor] = useState(0);
-  const [allElevators, setAllElevators] = useState(elevators);
+  // const [props.allElevators, setAllElevators] = useState(elevators);
   const [freeElevator, setFreeElevator] = useState<IElevator | null>(null);
 
   useEffect(() => {
-    console.log(floor);
     let buttons = document.getElementsByClassName("btn1") as any;
     for (let button of buttons) {
       if (button.id == floor) {
@@ -82,64 +81,75 @@ const Grid = (props: any) => {
 
   const handleClick = (e: any, floor: number) => {
     // if (e.target.className == "btn1") e.target.style.background = "red";
-    e.target.style.background = "red";
-    e.target.innerText = "Waiting";
+    // if (e.target.className === "btn1 button-3") {
+    //   e.target.style.background = "red";
+    //   e.target.innerText = "Waiting";
+    // }
     let elevator = null;
     setChosenFloor(floor);
-    let distance = Math.abs(allElevators[0].floor - floor);
-    for (let i = 0; i < allElevators.length; i++) {
-      if (allElevators[i].isBusy == false) {
-        if (Math.abs(allElevators[i].floor - floor) <= distance) {
-          distance = Math.abs(allElevators[i].floor - floor);
-          elevator = allElevators[i];
+    let distance = Math.abs(props.allElevators[0].floor - floor);
+    for (let i = 0; i < props.allElevators.length; i++) {
+      if (props.allElevators[i].isBusy == false) {
+        if (Math.abs(props.allElevators[i].floor - floor) <= distance) {
+          distance = Math.abs(props.allElevators[i].floor - floor);
+          elevator = props.allElevators[i];
         }
       }
     }
-    let array = allElevators;
+    let array = props.allElevators;
     for (let i = 0; i < array.length; i++) {
-      if (elevator == array[i]) {
+      if (elevator == array[i] && distance !== 0) {
+        if (e.target.className === "btn1 button-3") {
+          e.target.style.background = "red";
+          e.target.innerText = "Waiting";
+        }
         array[i] = {
           floor: floor,
           isBusy: true,
           color: "red",
           chosenFloor: floor,
         };
-        elevators[i] = {
+        props.allElevators[i] = {
           floor: floor,
           isBusy: true,
           color: "red",
           chosenFloor: floor,
         };
 
-        setAllElevators(array);
+        props.setAllElevators(array);
       }
     }
   };
-  // setAllElevators(elevators);
-  console.log(allElevators);
+  // setprops.allElevators(elevators);
+  console.log(props.allElevators);
 
   // useEffect(() => {
-  //   console.log(allElevators);
-  // }, [allElevators]);
+  //   console.log(props.allElevators);
+  // }, [props.allElevators]);
 
   const rows = [];
 
-  let elevatorsUi = elevators.map((item, index) => {
-    return <Elevator elevator={elevators[index]} />;
-  });
+  // let elevatorsUi = elevators.map((item, index) => {
+  //   return <Elevator elevator={elevators[index]} />;
+  // });
 
   for (let i = 0; i <= props.numberOfFloor; i++) {
     const cols = [];
 
-    for (let j = 0; j < 7; j++) {
-      if (i == props.numberOfFloor && j !== 0 && j !== 6) {
+    for (let j = 0; j <= props.numberOfElevator + 1; j++) {
+      if (
+        i == props.numberOfFloor &&
+        j !== 0 &&
+        j !== props.numberOfElevator + 1
+      ) {
+        console.log(j);
         cols.push(
           <div key={`${i}-${j}`} className="col">
             <Elevator
-              elevator={elevators[j - 1]}
-              setAllElevators={setAllElevators}
-              allElevators={allElevators}
-              elevators={elevators}
+              elevator={props.allElevators[j - 1]}
+              setAllElevators={props.setAllElevators}
+              allElevators={props.allElevators}
+              // elevators={elevators}
               setFloor={setFloor}
             />
             {/* Empty div */}
@@ -175,7 +185,7 @@ const Grid = (props: any) => {
             <h4>{props.numberOfFloor - i}th</h4>
           </div>
         );
-      } else if (j == 6) {
+      } else if (j == props.numberOfElevator + 1) {
         cols.push(
           <div
             key={`${i}-${j}`}
@@ -186,8 +196,7 @@ const Grid = (props: any) => {
               className="button"
               id={props.numberOfFloor - i}
               floor={props.numberOfFloor - i}
-              allElevators={allElevators}
-              elevators={elevators}
+              allElevators={props.allElevators}
             />
           </div>
         );
